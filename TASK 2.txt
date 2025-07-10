@@ -1,0 +1,47 @@
+
+stock_prices = {
+    "AAPL": 180,
+    "TSLA": 250,
+    "GOOGL": 140,
+    "MSFT": 320,
+    "AMZN": 130
+}
+
+portfolio = {}
+
+print("📈 Welcome to the Stock Portfolio Tracker!")
+print("Available stocks:", ", ".join(stock_prices.keys()))
+print("Enter 'done' when you're finished.\n")
+
+while True:
+    stock = input("Enter stock symbol: ").upper()
+    if stock == "DONE":
+        break
+    if stock not in stock_prices:
+        print("⚠️ Stock not found in price list. Try again.\n")
+        continue
+    try:
+        quantity = int(input(f"Enter quantity of {stock}: "))
+        if quantity < 0:
+            raise ValueError
+    except ValueError:
+        print("⚠️ Please enter a valid positive integer for quantity.\n")
+        continue
+    portfolio[stock] = portfolio.get(stock, 0) + quantity
+    print(f"✅ Added {quantity} shares of {stock}.\n")
+
+total_investment = 0
+print("\n📊 Portfolio Summary:")
+print(f"{'Stock':<10}{'Quantity':<10}{'Price':<10}{'Value':<10}")
+print("-" * 40)
+for stock, quantity in portfolio.items():
+    price = stock_prices[stock]
+    value = quantity * price
+    total_investment += value
+    print(f"{stock:<10}{quantity:<10}{price:<10}{value:<10}")
+print("-" * 40)
+print(f"{'Total Investment:':<30} ₹{total_investment}")
+
+save = input("\n💾 Do you want to save this summary to a file? (yes/no): ").lower()
+if save == "yes":
+    with open("portfolio
